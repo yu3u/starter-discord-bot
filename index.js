@@ -83,6 +83,11 @@ app.get('/register_commands', async (req,res) =>{
       "name": "dm",
       "description": "sends user a DM",
       "options": []
+    },
+    {
+      "name": "end"
+      "description": "このコマンドを送信するとエンディングです"
+      "options": [] 
     }
   ]
   try
