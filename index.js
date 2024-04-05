@@ -5,6 +5,8 @@ const APPLICATION_ID = process.env.APPLICATION_ID
 const TOKEN = process.env.TOKEN 
 const PUBLIC_KEY = process.env.PUBLIC_KEY || 'not set'
 const GUILD_ID = process.env.GUILD_ID 
+const mainChannelId = 1223285789228797955;
+
 
 
 const axios = require('axios')
@@ -43,17 +45,13 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       });
     }
 
-const mainChannelId = [1223285789228797955];
-
 client.on('voiceStateUpdate', (oldGuildMember, newGuildMember) =>{
  if(oldGuildMember.voiceChannelID === undefined && newGuildMember.voiceChannelID !== undefined){
    if(client.channels.get(newGuildMember.voiceChannelID).members.size == 1){
-     if (newGuildMember.voiceChannelID == 1225332784785133569) {
        newGuildMember.voiceChannel.createInvite({"maxAge":"0"})
          .then(invite => sendMsg(
            mainChannelId, "<@" + newGuildMember.user.id +"> が通話を開始しました！\n" + invite.url
          ));
-     }
    }
  }
 });
