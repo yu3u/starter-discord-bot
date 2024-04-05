@@ -43,6 +43,21 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
       });
     }
 
+const mainChannelId = [1223285789228797955];
+
+client.on('voiceStateUpdate', (oldGuildMember, newGuildMember) =>{
+ if(oldGuildMember.voiceChannelID === undefined && newGuildMember.voiceChannelID !== undefined){
+   if(client.channels.get(newGuildMember.voiceChannelID).members.size == 1){
+     if (newGuildMember.voiceChannelID == 725595164105768984) {
+       newGuildMember.voiceChannel.createInvite({"maxAge":"0"})
+         .then(invite => sendMsg(
+           mainChannelId, "<@" + newGuildMember.user.id +"> が通話を開始しました！\n" + invite.url
+         ));
+     }
+   }
+ }
+});
+
     if(interaction.data.name == 'dm'){
       // https://discord.com/developers/docs/resources/user#create-dm
       let c = (await discord_api.post(`/users/@me/channels`,{
